@@ -15,12 +15,16 @@
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// ------------------------------------------------------------------
 // this class implements window focus listening
+// ------------------------------------------------------------------
 public class GUI extends JFrame implements WindowFocusListener
 {
   public GUI (Application application)
@@ -29,8 +33,10 @@ public class GUI extends JFrame implements WindowFocusListener
     this.application = application;
     setSize (400, 300);
 
+    // ------------------------------------------------------------------
     // register this object to listen to window focus events
-    this.addWindowFocusListener (this); 
+    addWindowFocusListener (this); 
+    // ------------------------------------------------------------------
 
     menuBar = new JMenuBar ();
     JMenu fileMenu = new JMenu ("File");
@@ -44,6 +50,24 @@ public class GUI extends JFrame implements WindowFocusListener
     // text field
     textField = new JTextField (10);
     add (textField, BorderLayout.PAGE_START);
+    // ------------------------------------------------------------------
+    // adding a listener: anonymous inner class implementing methods
+    // of DocumentListener
+    textField.getDocument ().addDocumentListener (new DocumentListener ()
+      {
+        public void insertUpdate (DocumentEvent e)
+        {
+          updateTextLength ();
+        }
+        public void removeUpdate (DocumentEvent e)
+        {
+          updateTextLength ();
+        }
+        public void changedUpdate (DocumentEvent e)
+        {
+        }
+      });
+    // ------------------------------------------------------------------
 
     // a label for showing whether focus is in or out
     focusLabel = new JLabel ();
@@ -58,6 +82,8 @@ public class GUI extends JFrame implements WindowFocusListener
     setVisible (true);
   }
 
+  // ------------------------------------------------------------------
+  // methods needed to implement WindowFocusListener
   public void windowGainedFocus (WindowEvent e)
   {
     application.hasFocus = true;
@@ -69,7 +95,14 @@ public class GUI extends JFrame implements WindowFocusListener
     application.hasFocus = false;
     showFocus ();
   }
+  // ------------------------------------------------------------------
 
+  public void updateTextLength ()
+  {
+    application.textLength = textField.getText ().length ();
+    showTextLength ();
+  }
+  
   void showTextLength ()
   {
     textLengthLabel.setText (application.textLength + "");
