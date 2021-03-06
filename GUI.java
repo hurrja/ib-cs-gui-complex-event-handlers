@@ -49,7 +49,7 @@ public class GUI extends JFrame implements WindowFocusListener
 
     // text field
     textField = new JTextField (10);
-    add (textField, BorderLayout.PAGE_START);
+    add (textField, BorderLayout.CENTER);
     // ------------------------------------------------------------------
     // adding a listener: anonymous inner class implementing methods
     // of DocumentListener
@@ -72,12 +72,12 @@ public class GUI extends JFrame implements WindowFocusListener
     // a label for showing whether focus is in or out
     focusLabel = new JLabel ();
     showFocus ();
-    add (focusLabel, BorderLayout.LINE_START);
+    add (focusLabel, BorderLayout.PAGE_START);
 
     // a label for showing length of text
     textLengthLabel = new JLabel ();
     showTextLength ();
-    add (textLengthLabel, BorderLayout.LINE_END);
+    add (textLengthLabel, BorderLayout.PAGE_END);
 
     setVisible (true);
   }
