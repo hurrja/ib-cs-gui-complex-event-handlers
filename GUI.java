@@ -15,17 +15,22 @@
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI extends JFrame
+// this class implements window focus listening
+public class GUI extends JFrame implements WindowFocusListener
 {
   public GUI (Application application)
   {
     super ("Complex event demo");
     this.application = application;
-
     setSize (400, 300);
+
+    // register this object to listen to window focus events
+    this.addWindowFocusListener (this); 
 
     menuBar = new JMenuBar ();
     JMenu fileMenu = new JMenu ("File");
@@ -51,6 +56,18 @@ public class GUI extends JFrame
     add (textLengthLabel, BorderLayout.LINE_END);
 
     setVisible (true);
+  }
+
+  public void windowGainedFocus (WindowEvent e)
+  {
+    application.hasFocus = true;
+    showFocus ();
+  }
+  
+  public void windowLostFocus (WindowEvent e)
+  {
+    application.hasFocus = false;
+    showFocus ();
   }
 
   void showTextLength ()
