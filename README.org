@@ -1,8 +1,12 @@
-* Simple GUI example
+* Complex event handling in Swing GUI
 ** The purpose of this repository
    This repository contains an example of a simple GUI with complex
    event handling, where lambda expressions are no longer sufficient
-   as event handlers.
+   as event handlers. The methods illustrated are
+   1. using an existing class to implement a listening interface:
+      class =GUI= as a =WindowFocusListener=
+   2. using an anonymous class to implement a listening interface:
+      =DocumentListener=.
 
 ** Installation in IDEA
    To install the application in IDEA, do the following:
